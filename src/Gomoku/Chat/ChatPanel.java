@@ -74,12 +74,12 @@ public class ChatPanel extends JPanel {
     }
     
     
-    private void addMessage(String text, String incident, int bound) {
+    private void addMessage(String text, String indent, int bound) {
         FontMetrics fontMetrics = historyTextArea.getFontMetrics(historyTextArea.getFont());
-        StringBuilder line = new StringBuilder(incident);
+        StringBuilder line = new StringBuilder(indent);
         line.append(text);
         if (fontMetrics.stringWidth(line.toString()) < bound) {
-            if (!incident.equals("")) {
+            if (!indent.equals("")) {
                 while (fontMetrics.stringWidth(line.toString()) <= bound)
                     line.insert(0, " ");
                 line.deleteCharAt(0);
@@ -88,7 +88,7 @@ public class ChatPanel extends JPanel {
         }
         else {
             StringBuilder input = new StringBuilder(text);
-            line = new StringBuilder(incident);
+            line = new StringBuilder(indent);
             for (int i = 0; i < input.length(); ++i) {
                 line.append(input.charAt(i));
                 if (fontMetrics.stringWidth(line.toString()) > bound) {
@@ -96,12 +96,13 @@ public class ChatPanel extends JPanel {
                     input.delete(0, i - 1);
                     i = 0;
                     addLine(line.toString());
-                    line = new StringBuilder(incident);
+                    line = new StringBuilder(indent);
                 }
                 else if (i == input.length() - 1)
                     addLine(line.toString());
             }
         }
+        addLine("");
     }
     
     

@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class Client extends AbstractSocket {
     private final Gomoku gomoku;
     private final Socket client;
-    private final LinkedBlockingDeque<byte[]> messageQueue;
+    private final LinkedBlockingDeque<byte[]> messageQueue; // 消息队列，用于存储接收到的消息。
     
     
     public Client(Socket client) {
@@ -44,7 +44,7 @@ public class Client extends AbstractSocket {
     
     public void sendToServer(byte[] message) {
         try {
-            sendPackage(client.getOutputStream(), message);
+            sendPacket(client.getOutputStream(), message);
         }
         catch (IOException ignored) {
         }
@@ -55,7 +55,7 @@ public class Client extends AbstractSocket {
         while (!client.isClosed()) {
             try {
                 InputStream is = client.getInputStream();
-                byte[] message = receivePackage(is);
+                byte[] message = receivePacket(is);
                 printMessage(message);
                 messageQueue.add(message);
             }

@@ -11,50 +11,50 @@ public class TimeManager {
     }
     
     
-    public void OnNewGame() {
+    public void onNewGame() {
         countDownPanel.start();
         timerPanel.stop();
         timerPanel.start();
     }
     
     
-    public void OnGameOver() {
+    public void onGameOver() {
         countDownPanel.stop();
         timerPanel.pause();
     }
     
     
-    public void OnReset() {
+    public void onReset() {
         countDownPanel.stop();
         timerPanel.stop();
     }
     
     
-    public void OnPutStone() {
+    public void onPutStone() {
         countDownPanel.stop();
         countDownPanel.start();
     }
     
     
-    public void OnRetractStone() {
+    public void onRetractStone() {
         countDownPanel.stop();
         countDownPanel.start();
     }
     
     
-    public void OnAdmitDefeat() {
+    public void onAdmitDefeat() {
         countDownPanel.pause();
         timerPanel.pause();
     }
     
     
-    public void OnDialog() {
+    public void onDialog() {
         countDownPanel.pause();
         timerPanel.pause();
     }
     
     
-    public void OnDialogClose() {
+    public void onDialogClose() {
         countDownPanel.start();
         timerPanel.start();
     }

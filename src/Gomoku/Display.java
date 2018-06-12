@@ -100,7 +100,7 @@ public class Display extends JPanel {
         Graphics2D g2D = (Graphics2D) getGraphics();
         paintBoard(g2D);
         paintPlayer(g2D);
-        timeManager.OnNewGame();
+        timeManager.onNewGame();
     }
     
     
@@ -112,7 +112,7 @@ public class Display extends JPanel {
         gameStartedChangeSupport.setValue(false);
         presetStoneNumber = 5;
         playerStoneType = StoneType.SPACE;
-        timeManager.OnReset();
+        timeManager.onReset();
     }
     
     
@@ -124,7 +124,7 @@ public class Display extends JPanel {
      * @param rowStones        连珠的棋子
      */
     public void gameOver(int winnerNumber, List<Integer> indexOfRowStones, List<Stone> rowStones) {
-        timeManager.OnGameOver();
+        timeManager.onGameOver();
         reset();
         Graphics2D g2D = (Graphics2D) getGraphics();
         int rowStoneNumber = rowStones.size();
@@ -150,7 +150,7 @@ public class Display extends JPanel {
      * 认输
      */
     public void admitDefeat() {
-        timeManager.OnAdmitDefeat();
+        timeManager.onAdmitDefeat();
         client.admitDefeat();
     }
     
@@ -159,7 +159,7 @@ public class Display extends JPanel {
      * 选择执子颜色
      */
     public void choosePlayerColor() {
-        timeManager.OnDialog();
+        timeManager.onDialog();
         if (getHistorySize() == 3) {
             String message = (playerNumber == 2 ? "本方" : "对方") + "玩家选择执子颜色";
             messageLabel.setText(message);
@@ -213,7 +213,7 @@ public class Display extends JPanel {
      * @param historySize   落子完成后棋盘上的棋子数
      */
     public void putStone(Stone stone, Stone previousStone, int historySize) {
-        timeManager.OnPutStone();
+        timeManager.onPutStone();
         Graphics2D g2D = (Graphics2D) getGraphics();
         if (previousStone != null)
             paintStoneWithIndex(g2D, previousStone, historySize - 2, false);
@@ -234,7 +234,7 @@ public class Display extends JPanel {
      * @param historySize   悔棋完成后棋盘上的棋子数
      */
     public void retractStone(Stone stone, Stone previousStone, int historySize) {
-        timeManager.OnRetractStone();
+        timeManager.onRetractStone();
         Graphics2D g2D = (Graphics2D) getGraphics();
         eraseStone(g2D, stone.getI(), stone.getJ());
         paintStoneIndex(g2D, previousStone, historySize - 1, true);
@@ -294,9 +294,8 @@ public class Display extends JPanel {
     public void setPlayerStoneType(StoneType playerStoneType, int presetStoneNumber) {
         this.playerStoneType = playerStoneType;
         this.presetStoneNumber = presetStoneNumber;
-        System.out.printf("%d %d\n", client.socketId, presetStoneNumber);
         paintPlayer((Graphics2D) getGraphics());
-        timeManager.OnDialogClose();
+        timeManager.onDialogClose();
         if (isPlayerColorChosen())
             JOptionPane.showMessageDialog(this, "本方执" + (playerStoneType == StoneType.BLACK ? "黑" : "白") + " 对方执" + (playerStoneType == StoneType.BLACK ? "白" : "黑"), "", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -708,7 +707,7 @@ public class Display extends JPanel {
 
 class DataChangeSupport<T> extends PropertyChangeSupport {
     private T value;
-    private String propertyName;
+    private final String propertyName;
     
     
     public DataChangeSupport(Object source, String propertyName, T initialValue) {
